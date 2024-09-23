@@ -3,11 +3,16 @@ import Axios from "axios";
 import { Square, SquareCheck, SquareChevronDown, Trash2 } from "lucide-react";
 
 const App = () => {
+  const API_URL =
+    process.env.NODE_ENV === "production"
+      ? "https://your-app.onrender.com/api"
+      : "http://localhost:3001/api";
+
   const [getTodos, setGetTodos] = useState([]);
   const [taskToAdd, setTaskToAdd] = useState("");
   const [taskToComplete, setTaskToComplete] = useState(false);
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/todos/")
+    Axios.get(`${API_URL}/todos/`)
       .then((response) => {
         setGetTodos(response.data);
       })
@@ -17,7 +22,7 @@ const App = () => {
   }, []);
 
   const handleTaskAddition = () => {
-    Axios.post("http://localhost:3001/api/todos/", { title: taskToAdd })
+    Axios.post(`${API_URL}/todos/`, { title: taskToAdd })
       .then((response) => {
         setGetTodos((prevTodos) => [response.data, ...prevTodos]);
       })
@@ -32,7 +37,7 @@ const App = () => {
     setGetTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== id));
 
     // Send the delete request to the server
-    Axios.delete(`http://localhost:3001/api/todos/${id}`)
+    Axios.delete(`${API_URL}/todos/${id}`)
       .then((response) => {
         // The request succeeded, and the UI has already been updated optimistically
         alert("Task deleted");
@@ -56,7 +61,7 @@ const App = () => {
     );
 
     // Send PUT request to the server to update task completion
-    Axios.put(`http://localhost:3001/api/todos/${id}`, {
+    Axios.put(`${API_URL}/todos/${id}`, {
       completed: !currentStatus, // Toggle the current completion status
     })
       .then((response) => {
