@@ -3,10 +3,10 @@ import Axios from "axios";
 import { Square, SquareCheck, SquareChevronDown, Trash2 } from "lucide-react";
 
 const App = () => {
-  const API_URL =
-    process.env.NODE_ENV === "production"
-      ? "https://your-app.onrender.com/api"
-      : "http://localhost:3001/api";
+  const API_URL = "https://tasklyst-todo.onrender.com/api";
+  // process.env.NODE_ENV === "production"
+  //   ? "https://tasklyst-todo.onrender.com/"
+  //   : "http://localhost:3001/api";
 
   const [getTodos, setGetTodos] = useState([]);
   const [taskToAdd, setTaskToAdd] = useState("");
